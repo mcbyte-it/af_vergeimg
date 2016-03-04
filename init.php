@@ -70,9 +70,9 @@ class Af_VergeImg extends Plugin {
 		if (stripos($article["link"], "theverge.com") !== FALSE) {
 			//$article["log"] = $article["log"] . "\nEntered to fix";
 
-			$charset_hack = '<head>
+			/*$charset_hack = '<head>
 				<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-			</head>';
+			</head>';*/
 
 			$doc = new DOMDocument();
 			$doc->loadHTML($charset_hack . $article["content"]);
@@ -91,7 +91,7 @@ class Af_VergeImg extends Plugin {
 				foreach ($images as $img) {
 					$src = $img->getAttribute("src");
 
-					if (stripos($src, ".gif") > 0) {
+					if (stripos($src, ".gif") > 0 && strpos($src, "img_stop_gif.php") === false) {
 						$img->setAttribute("src", "plugins.local/af_vergeimg/img_stop_gif.php?src=".urlencode($src));
 						$found = true;
 						//$article["log"] = $article["log"] . "\nFound GIF";
